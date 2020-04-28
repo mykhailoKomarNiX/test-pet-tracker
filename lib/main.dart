@@ -298,10 +298,10 @@ class _GoalItemState extends State<GoalItem> {
                         Container(
                           margin: EdgeInsets.only(left: 5),
                           child: Text(
-                          widget.title,
-                          style: TextStyle(fontSize: 12),
-                        ),)
-                        
+                            widget.title,
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -328,6 +328,31 @@ class _GoalItemState extends State<GoalItem> {
         ],
       ),
     );
+  }
+}
+
+class WeeklyWalk extends StatefulWidget {
+  @override
+  _WeeklyWalkState createState() => _WeeklyWalkState();
+}
+
+class _WeeklyWalkState extends State<WeeklyWalk> {
+  double value = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        // child:
+        //   Slider(
+        //   value: value,
+        //   divisions: 5,
+        //   min: 0,
+        //   max: 5,
+        //   label: '$value',
+        //   onChanged: (double newValue) => setState(() {
+        //     value = newValue;
+        //   }),
+        // ),
+        );
   }
 }
 
@@ -363,6 +388,22 @@ class _HomePageState extends State<HomePage> {
             PetPhoto(),
             LastSyncUp(),
             GoalList(),
+            WeeklyWalk(),
+            Center(
+              child: Container(
+                margin: EdgeInsets.only(top: 20),
+                width: 200,
+                child: RaisedButton(
+                  onPressed: () => print('Action'),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32)),
+                  child: Text(
+                    'Action',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+            ),
           ],
         ));
   }
