@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -36,6 +38,49 @@ class _PetState extends State<Pet> {
           border: widget.border ? Border.all() : null,
           shape: BoxShape.circle,
           color: Colors.grey),
+    );
+  }
+}
+
+class PetContainer extends StatefulWidget {
+  @override
+  _PetContainerState createState() => _PetContainerState();
+}
+
+class _PetContainerState extends State<PetContainer> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(20),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Pet(border: true),
+          Pet(),
+          Pet(),
+        ],
+      ),
+    );
+  }
+}
+
+class StatusCircle extends StatefulWidget {
+  @override
+  _StatusCircleState createState() => _StatusCircleState();
+}
+
+class _StatusCircleState extends State<StatusCircle> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 15,
+      height: 15,
+      decoration: BoxDecoration(
+        border: Border.all(),
+        color: Colors.green,
+        shape: BoxShape.circle,
+      ),
     );
   }
 }
@@ -99,22 +144,189 @@ class _PetPhotoState extends State<PetPhoto> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  StatusCircle(),
                   Container(
-                    width: 15,
-                    height: 15,
-                    margin: EdgeInsets.only(right: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      color: Colors.green,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  Text('Device'),
+                      margin: EdgeInsets.only(left: 5), child: Text('Device')),
                   Icon(Icons.keyboard_arrow_right),
                 ],
               ),
             )),
       ],
+    );
+  }
+}
+
+class LastSyncUp extends StatefulWidget {
+  @override
+  _LastSyncUpState createState() => _LastSyncUpState();
+}
+
+class _LastSyncUpState extends State<LastSyncUp> {
+  String get time {
+    return '18:32';
+  }
+
+  String get label {
+    return 'Last sync up time: $time';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                  margin: EdgeInsets.only(top: 20, bottom: 10),
+                  child: Text(
+                    "Today's Status",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  )),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                  margin: EdgeInsets.only(bottom: 20), child: Text(label)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GoalList extends StatefulWidget {
+  @override
+  _GoalListState createState() => _GoalListState();
+}
+
+class _GoalListState extends State<GoalList> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(left: 10, right: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          GoalItem(
+            title: 'Step count',
+            goalValue: '8140',
+            currentValue: '8140',
+            measure: 'steps',
+            result: 'Done!',
+          ),
+          GoalItem(
+            title: 'Step count',
+            goalValue: '1249',
+            currentValue: '624',
+            measure: 'm',
+            result: '50%',
+          ),
+          GoalItem(
+            title: 'Sleep hours',
+            goalValue: '6:34',
+            currentValue: '4:25',
+            measure: 'hours',
+            result: '70%',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GoalItem extends StatefulWidget {
+  final String title;
+  final String goalValue;
+  final String currentValue;
+  final String measure;
+  final String result;
+
+  const GoalItem(
+      {this.title,
+      this.goalValue,
+      this.currentValue,
+      this.measure,
+      this.result});
+
+  @override
+  _GoalItemState createState() => _GoalItemState();
+}
+
+class _GoalItemState extends State<GoalItem> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Stack(children: <Widget>[
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(16.0)),
+            ),
+            Container(
+              width: 100,
+              height: 50,
+              decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.5),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16.0),
+                    topRight: Radius.circular(16.0),
+                  )),
+            ),
+            Container(
+              width: 100,
+              height: 100,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(left: 5, right: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        StatusCircle(),
+                        Container(
+                          margin: EdgeInsets.only(left: 5),
+                          child: Text(
+                          widget.title,
+                          style: TextStyle(fontSize: 12),
+                        ),)
+                        
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Text(
+                      widget.goalValue,
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    child: Text(widget.measure),
+                  )
+                ],
+              ),
+            ),
+          ]),
+          Container(
+              margin: EdgeInsets.only(top: 10),
+              child: Text(
+                widget.result,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ))
+        ],
+      ),
     );
   }
 }
@@ -147,31 +359,10 @@ class _HomePageState extends State<HomePage> {
         ),
         body: ListView(
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.all(20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Pet(border: true),
-                  Pet(),
-                  Pet(),
-                ],
-              ),
-            ),
+            PetContainer(),
             PetPhoto(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                    margin: EdgeInsets.all(20),
-                    child: Text(
-                      "Today's Status",
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    )),
-              ],
-            )
+            LastSyncUp(),
+            GoalList(),
           ],
         ));
   }
