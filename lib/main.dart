@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:petTracker/localizations.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,6 +12,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      supportedLocales: [
+        Locale('ja', ''),
+        Locale('en', 'US'),
+      ],
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       title: title,
       theme: ThemeData(
         primarySwatch: Colors.pink,
@@ -398,7 +409,7 @@ class _HomePageState extends State<HomePage> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32)),
                   child: Text(
-                    'Action',
+                    AppLocalizations.of(context).translate('action'),
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
