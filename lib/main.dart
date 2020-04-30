@@ -4,28 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:petTracker/localizations.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(PetTrackerApp());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  final String title = 'TOP';
+class PetTrackerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       supportedLocales: [
-        Locale('ja', ''),
         Locale('en', 'US'),
+        Locale('ja', ''),
       ],
       localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      title: title,
+      title: '',
       theme: ThemeData(
         primarySwatch: Colors.pink,
       ),
-      home: HomePage(title: title),
+      home: HomePage(),
     );
   }
 }
@@ -102,6 +100,11 @@ class PetPhoto extends StatefulWidget {
 }
 
 class _PetPhotoState extends State<PetPhoto> {
+  String get device => AppLocalizations.of(context).translate('device');
+  String get petPhoto => AppLocalizations.of(context).translate('petPhoto');
+  String get petName => AppLocalizations.of(context).translate('petName');
+  String get petBreedAndPetAge => AppLocalizations.of(context).translate('petBreedAndPetAge');
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -113,7 +116,7 @@ class _PetPhotoState extends State<PetPhoto> {
           ),
           child: Center(
             child: Text(
-              'Pet Photo',
+              petPhoto,
               style: TextStyle(fontSize: 22),
             ),
           ),
@@ -128,13 +131,13 @@ class _PetPhotoState extends State<PetPhoto> {
                 Container(
                   margin: EdgeInsets.only(bottom: 10),
                   child: Text(
-                    'Pet Name',
+                    petName,
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ),
                 Container(
                   child: Text(
-                    'Pet breed and pet age',
+                    petBreedAndPetAge,
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -144,7 +147,7 @@ class _PetPhotoState extends State<PetPhoto> {
             right: 20.0,
             top: 20,
             child: Container(
-              width: 120,
+              width: 125,
               height: 35,
               padding: EdgeInsets.only(left: 10, right: 10),
               decoration: BoxDecoration(
@@ -157,7 +160,7 @@ class _PetPhotoState extends State<PetPhoto> {
                 children: <Widget>[
                   StatusCircle(),
                   Container(
-                      margin: EdgeInsets.only(left: 5), child: Text('Device')),
+                      margin: EdgeInsets.only(left: 5), child: Text(device)),
                   Icon(Icons.keyboard_arrow_right),
                 ],
               ),
@@ -173,13 +176,12 @@ class LastSyncUp extends StatefulWidget {
 }
 
 class _LastSyncUpState extends State<LastSyncUp> {
-  String get time {
-    return '18:32';
-  }
-
-  String get label {
-    return 'Last sync up time: $time';
-  }
+  String get time => '18:32';
+  String get label => '$lastSyncUpTime: $time';
+  String get todaysStatus =>
+      AppLocalizations.of(context).translate('todaysStatus');
+  String get lastSyncUpTime =>
+      AppLocalizations.of(context).translate('lastSyncUpTime');
 
   @override
   Widget build(BuildContext context) {
@@ -192,7 +194,7 @@ class _LastSyncUpState extends State<LastSyncUp> {
               Container(
                   margin: EdgeInsets.only(top: 20, bottom: 10),
                   child: Text(
-                    "Today's Status",
+                    todaysStatus,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   )),
             ],
@@ -216,6 +218,13 @@ class GoalList extends StatefulWidget {
 }
 
 class _GoalListState extends State<GoalList> {
+  String get stepCount => AppLocalizations.of(context).translate('stepCount');
+  String get distance => AppLocalizations.of(context).translate('distance');
+  String get sleepHours => AppLocalizations.of(context).translate('sleepHours');
+  String get hours => AppLocalizations.of(context).translate('hours');
+  String get steps => AppLocalizations.of(context).translate('steps');
+  String get done => AppLocalizations.of(context).translate('done');
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -224,24 +233,24 @@ class _GoalListState extends State<GoalList> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           GoalItem(
-            title: 'Step count',
+            title: stepCount,
             goalValue: '8140',
             currentValue: '8140',
-            measure: 'steps',
-            result: 'Done!',
+            measure: steps,
+            result: done,
           ),
           GoalItem(
-            title: 'Step count',
+            title: distance,
             goalValue: '1249',
             currentValue: '624',
             measure: 'm',
             result: '50%',
           ),
           GoalItem(
-            title: 'Sleep hours',
+            title: sleepHours,
             goalValue: '6:34',
             currentValue: '4:25',
-            measure: 'hours',
+            measure: hours,
             result: '70%',
           ),
         ],
@@ -368,20 +377,21 @@ class _WeeklyWalkState extends State<WeeklyWalk> {
 }
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  HomePage({Key key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  String get title => AppLocalizations.of(context).translate('title');
+  String get action => AppLocalizations.of(context).translate('action');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(title),
           leading: IconButton(
             onPressed: () => print('more'),
             icon: Icon(Icons.more_horiz),
@@ -409,7 +419,7 @@ class _HomePageState extends State<HomePage> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32)),
                   child: Text(
-                    AppLocalizations.of(context).translate('action'),
+                    action,
                     style: TextStyle(fontSize: 16),
                   ),
                 ),

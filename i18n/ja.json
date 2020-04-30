@@ -1,3 +1,16 @@
 {
+  "title": "家",
+  "device": "デバイス",
+  "petPhoto": "ペットの写真",
+  "petName": "愛称",
+  "petBreedAndPetAge": "ペットの品種とペットの年齢",
+  "todaysStatus": "今日の状況",
+  "lastSyncUpTime": "最終同期時間",
+  "stepCount": "ステップ数",
+  "distance": "行程",
+  "sleepHours": "睡眠時間",
+  "hours": "時間数",
+  "steps": "歩数",
+  "done": "行われ!",
   "action": "アクション"
 }

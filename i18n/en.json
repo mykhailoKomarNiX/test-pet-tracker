@@ -1,3 +1,16 @@
 {
+  "title": "Home",
+  "device": "Device",
+  "petPhoto": "Pet Photo",
+  "petName": "Pet Name",
+  "petBreedAndPetAge": "Pet breed and pet age",
+  "todaysStatus": "Today's Status",
+  "lastSyncUpTime": "Last sync up time",
+  "stepCount": "Step count",
+  "distance": "Distance",
+  "sleepHours": "Sleep hours",
+  "hours": "hours",
+  "steps": "steps",
+  "done": "done!",
   "action": "Action"
 }
