@@ -1,12 +1,8 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
 import 'package:petTracker/localizations.dart';
 import 'package:petTracker/models/language.dart';
 import 'package:petTracker/utils/constants.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
-
-enum LanguageCode { en, ja }
 
 class SettingsPopup extends StatefulWidget {
   @override
@@ -14,7 +10,7 @@ class SettingsPopup extends StatefulWidget {
 }
 
 class _SettingsPopupState extends State<SettingsPopup> {
-  String _selectedLanguage = ui.window.locale.languageCode;
+  String _selectedLanguage;
 
   Function get onSelected => (String result) async {
     setState(() {
