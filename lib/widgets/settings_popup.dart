@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:petTracker/localizations.dart';
 import 'package:petTracker/models/language.dart';
@@ -12,42 +14,35 @@ class SettingsPopup extends StatefulWidget {
 }
 
 class _SettingsPopupState extends State<SettingsPopup> {
-  LanguageCode _selectedLanguage = LanguageCode.en;
-  bool get isEnglish => _selectedLanguage == LanguageCode.en;
-  bool get isJapanese => _selectedLanguage == LanguageCode.ja;
+  String _selectedLanguage = ui.window.locale.languageCode;
 
-  Function get onSelected => (LanguageCode result) async{
+  Function get onSelected => (String result) async {
     setState(() {
       _selectedLanguage = result;
     });
     (await StreamingSharedPreferences.instance).setCustomValue(
       LANGUAGE_KEY,
-      isEnglish
-        ? supportedLanguages[0]
-        : supportedLanguages[1],
+      supportedLanguages.firstWhere((lng) => lng.asLanguageCode == _selectedLanguage),
       adapter: JsonAdapter(
         serializer: (Language value) => value.toJson(),
       ),
     );
   };
 
+  List<PopupMenuEntry<String>> get mapSupportedLanguagesToCheckedPopupMenuItem => 
+    supportedLanguages
+      .map((Language language) => CheckedPopupMenuItem<String>(
+            value: language.asLanguageCode,
+            checked: _selectedLanguage == language.asLanguageCode,
+            child: Text(language.label),
+          )).toList();
+
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton<LanguageCode>(
+    return PopupMenuButton<String>(
       onSelected: onSelected,
       icon: Icon(Icons.settings),
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<LanguageCode>>[
-        CheckedPopupMenuItem<LanguageCode>(
-          value: LanguageCode.en,
-          checked: isEnglish,
-          child: Text('English'),
-        ),
-        CheckedPopupMenuItem<LanguageCode>(
-          value: LanguageCode.ja,
-          checked: isJapanese,
-          child: Text('Japanese'),
-        ),
-      ],
+      itemBuilder: (BuildContext context) => mapSupportedLanguagesToCheckedPopupMenuItem,
     );
   }
 }

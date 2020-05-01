@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 import 'models/language.dart';
 
 const List<Language> supportedLanguages = [
-  Language(languageCode: 'en', countryCode: 'US'),
-  Language(languageCode: 'ja'),
+  Language(label: 'English', languageCode: 'en', countryCode: 'US'),
+  Language(label: '日本語', languageCode: 'ja'),
 ];
 
 class AppLocalizations {
