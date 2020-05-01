@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:petTracker/localizations.dart';
+import 'package:petTracker/models/language.dart';
+import 'package:petTracker/utils/constants.dart';
+import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
-enum Language { en, ja }
+enum LanguageCode { en, ja }
 
 class SettingsPopup extends StatefulWidget {
   @override
@@ -8,29 +12,38 @@ class SettingsPopup extends StatefulWidget {
 }
 
 class _SettingsPopupState extends State<SettingsPopup> {
-  Language _selectedLanguage = Language.en;
-  bool get isEnglish => _selectedLanguage == Language.en;
-  bool get isJapanese => _selectedLanguage == Language.ja;
+  LanguageCode _selectedLanguage = LanguageCode.en;
+  bool get isEnglish => _selectedLanguage == LanguageCode.en;
+  bool get isJapanese => _selectedLanguage == LanguageCode.ja;
 
-  Function get onSelected => (Language result) {
+  Function get onSelected => (LanguageCode result) async{
     setState(() {
       _selectedLanguage = result;
     });
+    (await StreamingSharedPreferences.instance).setCustomValue(
+      LANGUAGE_KEY,
+      isEnglish
+        ? supportedLanguages[0]
+        : supportedLanguages[1],
+      adapter: JsonAdapter(
+        serializer: (Language value) => value.toJson(),
+      ),
+    );
   };
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton<Language>(
+    return PopupMenuButton<LanguageCode>(
       onSelected: onSelected,
       icon: Icon(Icons.settings),
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<Language>>[
-        CheckedPopupMenuItem<Language>(
-          value: Language.en,
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<LanguageCode>>[
+        CheckedPopupMenuItem<LanguageCode>(
+          value: LanguageCode.en,
           checked: isEnglish,
           child: Text('English'),
         ),
-        CheckedPopupMenuItem<Language>(
-          value: Language.ja,
+        CheckedPopupMenuItem<LanguageCode>(
+          value: LanguageCode.ja,
           checked: isJapanese,
           child: Text('Japanese'),
         ),
