@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:petTracker/localizations.dart';
@@ -11,16 +9,12 @@ class PetTrackerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      supportedLocales: [
-        Locale('en', 'US'),
-        Locale('ja', ''),
-      ],
+      supportedLocales: supportedLanguages.map((lng) => lng.asLocale),
       localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      title: '',
       theme: ThemeData(
         primarySwatch: Colors.pink,
       ),
